@@ -16,7 +16,7 @@ def main():
     params = {}
     timestamp = None
 
-    bot = telegram.Bot(token=os.getenv('TG_API_KKEY'))
+    bot = telegram.Bot(token=os.getenv('TG_API_KEY'))
     
     while True:
         try:
