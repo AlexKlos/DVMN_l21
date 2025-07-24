@@ -17,7 +17,7 @@ def main():
     timestamp = None
 
     bot = telegram.Bot(token=os.getenv('TG_API_KEY'))
-    
+
     while True:
         try:
             if timestamp:
@@ -43,7 +43,7 @@ def main():
                 bot.send_message(chat_id=os.getenv('TG_CHAT_ID'), text=message)
 
         except requests.exceptions.ReadTimeout:
-            print('Нет ответа от сервера. Выполняю повторный запрос.')
+            time.sleep(0.01)
         except requests.exceptions.ConnectionError:
             print('Ошибка подключения. Повторный запрос через 5 сек.')
             time.sleep(5)
