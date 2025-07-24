@@ -24,6 +24,7 @@ def main():
                 params['timestamp'] = timestamp
 
             response = requests.get(url, headers=headers, params=params, timeout=95)
+            response.raise_for_status()
             dictionary_response = response.json()
 
             if dictionary_response['status'] == 'timeout':
@@ -33,18 +34,21 @@ def main():
 
                 lesson_title = dictionary_response['new_attempts'][0]['lesson_title']
                 lesson_url = dictionary_response['new_attempts'][0]['lesson_url']
-                result_message = (
+                message = (
                     'К сожалению, в работе нашлись ошибки.' 
                     if dictionary_response['new_attempts'][0]['is_negative'] 
                     else 'Преподавателю всё понравилось, можно приступать к следующему уроку!'
                 )
-                message = f'У вас проверили работу: {lesson_title}\n{lesson_url}\n\n{result}'
+                result_message = f'У вас проверили работу: {lesson_title}\n{lesson_url}\n\n{message}'
                 bot.send_message(chat_id=os.getenv('TG_CHAT_ID'), text=result_message)
 
         except requests.exceptions.ReadTimeout:
             time.sleep(0.01)
         except requests.exceptions.ConnectionError:
             print('Ошибка подключения. Повторный запрос через 5 сек.')
+            time.sleep(5)
+        except requests.exceptions.HTTPError as e:
+            print(f'Сервер вернул ошибку: {e.response.status_code} {e.response.reason}\nПовторный запрос через 5 сек.')
             time.sleep(5)
 
 
