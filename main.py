@@ -24,19 +24,19 @@ def main():
                 params['timestamp'] = timestamp
 
             response = requests.get(url, headers=headers, params=params, timeout=95)
-            json_response = response.json()
-            print(json_response)
+            dictionary_response = response.json()
+            print(dictionary_response)
 
-            if json_response['status'] == 'timeout':
-                timestamp = json_response['timestamp_to_request']
+            if dictionary_response['status'] == 'timeout':
+                timestamp = dictionary_response['timestamp_to_request']
             else:
-                timestamp = json_response['last_attempt_timestamp']
+                timestamp = dictionary_response['last_attempt_timestamp']
 
-                lesson_title = json_response['new_attempts'][0]['lesson_title']
-                lesson_url = json_response['new_attempts'][0]['lesson_url']
+                lesson_title = dictionary_response['new_attempts'][0]['lesson_title']
+                lesson_url = dictionary_response['new_attempts'][0]['lesson_url']
                 result_message = (
                     'К сожалению, в работе нашлись ошибки.' 
-                    if json_response['new_attempts'][0]['is_negative'] 
+                    if dictionary_response['new_attempts'][0]['is_negative'] 
                     else 'Преподавателю всё понравилось, можно приступать к следующему уроку!'
                 )
                 message = f'У вас проверили работу: {lesson_title}\n{lesson_url}\n\n{result}'
