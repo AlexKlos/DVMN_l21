@@ -8,15 +8,18 @@ import telegram
 
 def main():
     load_dotenv()
+    DEVMAN_API_TOKEN = os.environ['DEVMAN_API_TOKEN']
+    TG_API_KEY = os.environ['TG_API_KEY']
+    TG_CHAT_ID = os.environ['TG_CHAT_ID']
 
     url = 'https://dvmn.org/api/long_polling/'
     headers = {
-        f'Authorization': os.getenv('DEVMAN_API_TOKEN')
+        'Authorization': f'{DEVMAN_API_TOKEN}'
     }
     params = {}
     timestamp = None
 
-    bot = telegram.Bot(token=os.getenv('TG_API_KEY'))
+    bot = telegram.Bot(token=TG_API_KEY)
 
     while True:
         try:
@@ -40,7 +43,7 @@ def main():
                     else 'Преподавателю всё понравилось, можно приступать к следующему уроку!'
                 )
                 result_message = f'У вас проверили работу: {lesson_title}\n{lesson_url}\n\n{message}'
-                bot.send_message(chat_id=os.getenv('TG_CHAT_ID'), text=result_message)
+                bot.send_message(chat_id=TG_CHAT_ID, text=result_message)
 
         except requests.exceptions.ReadTimeout:
             time.sleep(0.01)
