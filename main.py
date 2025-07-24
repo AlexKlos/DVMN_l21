@@ -34,13 +34,13 @@ def main():
 
                 lesson_title = json_response['new_attempts'][0]['lesson_title']
                 lesson_url = json_response['new_attempts'][0]['lesson_url']
-                result = (
+                result_message = (
                     'К сожалению, в работе нашлись ошибки.' 
                     if json_response['new_attempts'][0]['is_negative'] 
                     else 'Преподавателю всё понравилось, можно приступать к следующему уроку!'
                 )
                 message = f'У вас проверили работу: {lesson_title}\n{lesson_url}\n\n{result}'
-                bot.send_message(chat_id=os.getenv('TG_CHAT_ID'), text=message)
+                bot.send_message(chat_id=os.getenv('TG_CHAT_ID'), text=result_message)
 
         except requests.exceptions.ReadTimeout:
             time.sleep(0.01)
