@@ -25,7 +25,6 @@ def main():
 
             response = requests.get(url, headers=headers, params=params, timeout=95)
             dictionary_response = response.json()
-            print(dictionary_response)
 
             if dictionary_response['status'] == 'timeout':
                 timestamp = dictionary_response['timestamp_to_request']
