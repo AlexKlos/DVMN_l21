@@ -40,7 +40,7 @@ def main():
                     else 'Преподавателю всё понравилось, можно приступать к следующему уроку!'
                 )
                 message = f'У вас проверили работу: {lesson_title}\n{lesson_url}\n\n{result}'
-                bot.send_message(chat_id=os.getenv('MY_CHAT_ID'), text=message)
+                bot.send_message(chat_id=os.getenv('TG_CHAT_ID'), text=message)
 
         except requests.exceptions.ReadTimeout:
             print('Нет ответа от сервера. Выполняю повторный запрос.')
