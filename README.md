@@ -54,7 +54,7 @@ pip install -r requirements.txt
 
 ```env
 DEVMAN_API_TOKEN=Token 18fu2veuudvwe897234hio2fe6twwsdgsd286t324gl
-TG_API_KKEY=123456789:ABC-DEF1234ghIkl-zyx57W2v1u123ew11
+TG_API_KEY=123456789:ABC-DEF1234ghIkl-zyx57W2v1u123ew11
 TG_CHAT_ID=123456789
 ```
 
