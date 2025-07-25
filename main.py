@@ -46,7 +46,7 @@ def main():
                 bot.send_message(chat_id=TG_CHAT_ID, text=result_message)
 
         except requests.exceptions.ReadTimeout:
-            time.sleep(0.01)
+            continue
         except requests.exceptions.ConnectionError:
             print('Ошибка подключения. Повторный запрос через 5 сек.')
             time.sleep(5)
