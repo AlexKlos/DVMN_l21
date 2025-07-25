@@ -26,20 +26,20 @@ def main():
             if timestamp:
                 params['timestamp'] = timestamp
 
-            response = requests.get(url, headers=headers, params=params, timeout=95)
-            response.raise_for_status()
-            dictionary_response = response.json()
+            raw_response = requests.get(url, headers=headers, params=params, timeout=95)
+            raw_response.raise_for_status()
+            response = raw_response.json()
 
-            if dictionary_response['status'] == 'timeout':
-                timestamp = dictionary_response['timestamp_to_request']
+            if response['status'] == 'timeout':
+                timestamp = response['timestamp_to_request']
             else:
-                timestamp = dictionary_response['last_attempt_timestamp']
+                timestamp = response['last_attempt_timestamp']
 
-                lesson_title = dictionary_response['new_attempts'][0]['lesson_title']
-                lesson_url = dictionary_response['new_attempts'][0]['lesson_url']
+                lesson_title = response['new_attempts'][0]['lesson_title']
+                lesson_url = response['new_attempts'][0]['lesson_url']
                 message = (
                     'К сожалению, в работе нашлись ошибки.' 
-                    if dictionary_response['new_attempts'][0]['is_negative'] 
+                    if response['new_attempts'][0]['is_negative'] 
                     else 'Преподавателю всё понравилось, можно приступать к следующему уроку!'
                 )
                 result_message = f'У вас проверили работу: {lesson_title}\n{lesson_url}\n\n{message}'
@@ -51,7 +51,7 @@ def main():
             print('Ошибка подключения. Повторный запрос через 5 сек.')
             time.sleep(5)
         except requests.exceptions.HTTPError as e:
-            print(f'Сервер вернул ошибку: {e.response.status_code} {e.response.reason}\nПовторный запрос через 5 сек.')
+            print(f'Сервер вернул ошибку: {e.raw_response.status_code} {e.raw_response.reason}\nПовторный запрос через 5 сек.')
             time.sleep(5)
 
 
