@@ -42,6 +42,7 @@ def main():
     telegram_handller = TelegramLogsHandler(bot, TG_CHAT_ID)
     telegram_handller.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
     logger.addHandler(telegram_handller)
+    logger.info('Бот запущен.')
 
     while True:
         try:
