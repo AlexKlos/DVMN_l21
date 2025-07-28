@@ -76,6 +76,8 @@ def main():
         except requests.exceptions.HTTPError as e:
             logger.error(f'Сервер вернул ошибку: {e.response.status_code} {e.response.reason}\nПовторный запрос через 5 сек.')
             time.sleep(5)
+        except Exception as e:
+            logger.exception(e, exc_info=True)
 
 
 if __name__ == '__main__':
